@@ -1,12 +1,7 @@
-package com.demo.bookmanagement.core.application.services;
+package com.demo.bookmanagement.book;
 
-import com.demo.bookmanagement.core.application.dtos.BookUpdateRequest;
-import com.demo.bookmanagement.core.application.dtos.*;
-import com.demo.bookmanagement.core.domain.entities.Book;
-import com.demo.bookmanagement.infrastructure.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -83,10 +78,10 @@ public class BookService {
         }
 
         if (request.getAuthor() != null && !request.getAuthor().isBlank()) {
-            book.setTitle(request.getAuthor());
+            book.setAuthor(request.getAuthor());
         }
 
-        if (request.getYear() != null) {
+        if (request.getYear() != null || !request.getYear().equals(0)) {
             book.setYear(request.getYear());
         }
 

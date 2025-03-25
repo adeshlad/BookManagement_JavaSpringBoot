@@ -17,7 +17,7 @@ public class BookService {
     }
 
     public BookResponse addBook(BookAddRequest request) {
-        Book book = request.toBook();
+        Book book = new Book(request.getTitle(), request.getAuthor(), request.getYear());
         bookRepository.save(book);
 
         return new BookResponse(book);
@@ -30,7 +30,7 @@ public class BookService {
                 .toList();
     }
 
-    public BookResponse getBookById(UUID id) {
+    public BookResponse getBookById(Long id) {
         Book book = bookRepository.findById(id).orElse(null);
 
         if (book == null) {
@@ -41,32 +41,14 @@ public class BookService {
     }
 
     public List<BookResponse> getBooksByAttributes(String title, String author, Integer year) {
-        List<Book> books = bookRepository.findAll();
-
-        if (title != null && !title.isBlank()) {
-            books = books.stream()
-                    .filter(book -> book.getTitle().contains(title))
-                    .collect(Collectors.toList());
-        }
-
-        if (author != null && !author.isBlank()) {
-            books = books.stream()
-                    .filter(book -> book.getAuthor().contains(author))
-                    .collect(Collectors.toList());
-        }
-
-        if (year != null) {
-            books = books.stream()
-                    .filter(book -> book.getYear().equals(year))
-                    .collect(Collectors.toList());
-        }
+        List<Book> books = bookRepository.findByAttributes(title, author, year);
 
         return books.stream()
                 .map(BookResponse::new)
                 .toList();
     }
 
-    public BookResponse updateBook(UUID id, BookUpdateRequest request) {
+    public BookResponse updateBook(Long id, BookUpdateRequest request) {
         Book book = bookRepository.findById(id).orElse(null);
 
         if (book == null) {
@@ -81,7 +63,7 @@ public class BookService {
             book.setAuthor(request.getAuthor());
         }
 
-        if (request.getYear() != null || !request.getYear().equals(0)) {
+        if (request.getYear() != null && !request.getYear().equals(0)) {
             book.setYear(request.getYear());
         }
 
@@ -90,7 +72,7 @@ public class BookService {
         return new BookResponse(book);
     }
 
-    public boolean deleteBook(UUID id) {
+    public boolean deleteBook(Long id) {
         Book book = bookRepository.findById(id).orElse(null);
 
         if (book == null) {

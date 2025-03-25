@@ -1,15 +1,22 @@
 package com.demo.bookmanagement.book;
 
 import jakarta.persistence.*;
-
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "books")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
 
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String title;
@@ -20,47 +27,9 @@ public class Book {
     @Column(nullable = false)
     private Integer year;
 
-
-    public Book() {
-    }
-
-    public Book(UUID id, String title, String author, Integer year) {
-        this.id = id;
+    public Book(String title, String author, Integer year) {
         this.title = title;
         this.author = author;
-        this.year = year;
-    }
-
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
         this.year = year;
     }
 

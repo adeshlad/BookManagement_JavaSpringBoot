@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/books")
@@ -42,7 +41,7 @@ public class BookController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<BookResponse> getBookById(@PathVariable UUID id) {
+    public ResponseEntity<BookResponse> getBookById(@PathVariable Long id) {
         BookResponse response = bookService.getBookById(id);
 
         if (response == null) {
@@ -53,7 +52,7 @@ public class BookController {
     }
 
     @PutMapping("/id/{id}")
-    public ResponseEntity<BookResponse> updateBookById(@PathVariable UUID id, @RequestBody BookUpdateRequest request) {
+    public ResponseEntity<BookResponse> updateBookById(@PathVariable Long id, @RequestBody BookUpdateRequest request) {
         BookResponse response = bookService.updateBook(id, request);
 
         if (response == null) {
@@ -64,7 +63,7 @@ public class BookController {
     }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Void> deleteBookById(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteBookById(@PathVariable Long id) {
         boolean response = bookService.deleteBook(id);
 
         if (!response) {

@@ -22,7 +22,7 @@ public class BookController {
     @PostMapping("/")
     public ResponseEntity<BookResponse> addBook(@Valid @RequestBody BookAddRequest request) {
         BookResponse response = bookService.addBook(request);
-        URI location = URI.create("api/books/" + response.getId());
+        URI location = URI.create("api/books/id/" + response.getId());
 
         return ResponseEntity.created(location).body(response);
     }
@@ -41,7 +41,7 @@ public class BookController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<BookResponse> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookResponse> getBookById(@PathVariable String id) {
         BookResponse response = bookService.getBookById(id);
 
         if (response == null) {
@@ -52,7 +52,7 @@ public class BookController {
     }
 
     @PutMapping("/id/{id}")
-    public ResponseEntity<BookResponse> updateBookById(@PathVariable Long id, @RequestBody BookUpdateRequest request) {
+    public ResponseEntity<BookResponse> updateBookById(@PathVariable String id, @RequestBody BookUpdateRequest request) {
         BookResponse response = bookService.updateBook(id, request);
 
         if (response == null) {
@@ -63,7 +63,7 @@ public class BookController {
     }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Void> deleteBookById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBookById(@PathVariable String id) {
         boolean response = bookService.deleteBook(id);
 
         if (!response) {

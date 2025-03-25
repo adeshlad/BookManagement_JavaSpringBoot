@@ -1,7 +1,10 @@
 package com.demo.bookmanagement.book;
 
+import com.azure.cosmos.models.PartitionKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,13 +25,16 @@ public class BookService {
     }
 
     public List<BookResponse> getAllBooks() {
-        return bookRepository.findAll()
+        List<Book> books = new ArrayList<>();
+        bookRepository.findAll().forEach(books::add);
+
+        return books
                 .stream()
                 .map(BookResponse::new)
                 .toList();
     }
 
-    public BookResponse getBookById(Long id) {
+    public BookResponse getBookById(String id) {
         Book book = bookRepository.findById(id).orElse(null);
 
         if (book == null) {
@@ -46,7 +52,7 @@ public class BookService {
                 .toList();
     }
 
-    public BookResponse updateBook(Long id, BookUpdateRequest request) {
+    public BookResponse updateBook(String id, BookUpdateRequest request) {
         Book book = bookRepository.findById(id).orElse(null);
 
         if (book == null) {
@@ -70,14 +76,14 @@ public class BookService {
         return new BookResponse(book);
     }
 
-    public boolean deleteBook(Long id) {
+    public boolean deleteBook(String id) {
         Book book = bookRepository.findById(id).orElse(null);
 
         if (book == null) {
             return false;
         }
 
-        bookRepository.deleteById(id);
+        bookRepository.deleteById(id, new PartitionKey(id));
         return true;
     }
 }

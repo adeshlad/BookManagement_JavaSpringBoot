@@ -1,20 +1,19 @@
 package com.demo.bookmanagement.book;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import com.azure.spring.data.cosmos.repository.CosmosRepository;
+import com.azure.spring.data.cosmos.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BookRepository extends CosmosRepository<Book, String> {
 
-    // JPQL Query
-    @Query("SELECT b FROM Book b WHERE " +
-            "(:title IS NULL OR LOWER(b.title) LIKE LOWER(CONCAT('%', :title, '%'))) AND " +
-            "(:author IS NULL OR LOWER(b.author) LIKE LOWER(CONCAT('%', :author, '%'))) AND " +
-            "(:year IS NULL OR b.year = :year)")
-    List<Book> findByAttributes(@Param("title") String title, @Param("author") String author, @Param("year") Integer year);
+//    JPQL Query
+    @Query("SELECT * FROM c " +
+            "WHERE (CONTAINS(LOWER(c.title), LOWER(@title)))" +
+            "AND (CONTAINS(LOWER(c.author), LOWER(@author)))" +
+            "AND (c.year = @year)")
+    List<Book> findByAttributes(String title, String author, Integer year);
 
 }

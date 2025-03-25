@@ -13,8 +13,8 @@ public class CosmosDbConfig extends AbstractCosmosConfiguration {
     @Bean
     public CosmosClientBuilder getCosmosClientBuilder() {
         return new CosmosClientBuilder()
-                .endpoint("https://adesh-lad.documents.azure.com:443/")
-                .key("QnoAwjUrpKYMlx2MyvtsgL1y5TDaX4lKKSH0PAdt1fzKNe9pyNPI3ediqSjp0nPbGXJJ8pptFNlZACDbt2bjrg==");
+                .endpoint("URI")
+                .key("KEY");
     }
 
     @Override

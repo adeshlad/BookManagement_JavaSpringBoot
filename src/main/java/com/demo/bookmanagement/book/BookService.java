@@ -39,7 +39,7 @@ public class BookService {
     }
 
     public List<BookResponse> getBooksByAttributes(String title, String author, Integer year) {
-        List<Book> books = bookRepository.findByAttributes(title, author, year);
+        List<Book> books = bookRepository.findByAttributes(title.toLowerCase(), author.toLowerCase(), year);
 
         return books.stream()
                 .map(BookResponse::new)

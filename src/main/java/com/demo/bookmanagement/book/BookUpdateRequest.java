@@ -10,9 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookUpdateRequest {
-
     private String title;
     private String author;
     private Integer year;
-
 }

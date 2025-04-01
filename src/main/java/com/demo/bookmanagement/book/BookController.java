@@ -9,9 +9,8 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/books/")
+@RequestMapping("/api/books")
 public class BookController {
-
     private final BookService bookService;
 
     @Autowired
@@ -19,7 +18,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PostMapping("")
+    @PostMapping("/")
     public ResponseEntity<BookResponse> addBook(@Valid @RequestBody BookAddRequest request) {
         BookResponse response = bookService.addBook(request);
         URI location = URI.create("api/books/" + response.getId());
@@ -27,7 +26,7 @@ public class BookController {
         return ResponseEntity.created(location).body(response);
     }
 
-    @GetMapping("")
+    @GetMapping("/")
     public ResponseEntity<List<BookResponse>> getBooks(@RequestParam(required = false, defaultValue = "") String title, @RequestParam(required = false, defaultValue = "") String author, @RequestParam(required = false, defaultValue = "0") Integer year) {
         List<BookResponse> responses;
 
@@ -40,7 +39,7 @@ public class BookController {
         return ResponseEntity.ok().body(responses);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getBookById(@PathVariable Long id) {
         BookResponse response = bookService.getBookById(id);
 
@@ -51,7 +50,7 @@ public class BookController {
         return ResponseEntity.ok().body(response);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BookResponse> updateBookById(@PathVariable Long id, @RequestBody BookUpdateRequest request) {
         BookResponse response = bookService.updateBook(id, request);
 
@@ -62,7 +61,7 @@ public class BookController {
         return ResponseEntity.ok().body(response);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBookById(@PathVariable Long id) {
         boolean response = bookService.deleteBook(id);
 

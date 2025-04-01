@@ -10,7 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookResponse {
-
     private Long id;
     private String title;
     private String author;
@@ -22,5 +21,4 @@ public class BookResponse {
         this.author = book.getAuthor();
         this.year = book.getYear();
     }
-
 }

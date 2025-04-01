@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookAddRequest {
-
     @NotBlank(message = "Title is required.")
     private String title;
 
@@ -20,5 +19,4 @@ public class BookAddRequest {
 
     @NotNull(message = "Year is required.")
     private Integer year;
-
 }

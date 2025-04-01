@@ -1,4 +1,4 @@
-package com.demo.bookmanagement.book;
+package com.demo.bookmanagement.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,28 +7,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "books")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private String email;
 
     @Column(nullable = false)
-    private String author;
+    private String password;
 
-    @Column(nullable = false)
-    private Integer year;
-
-    public Book(String title, String author, Integer year) {
-        this.title = title;
-        this.author = author;
-        this.year = year;
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 }
